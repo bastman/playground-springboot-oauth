@@ -28,6 +28,9 @@ dependencies {
     compile('org.springframework.cloud:spring-cloud-starter-oauth2')
     compile('org.springframework.boot:spring-boot-starter-security')
 
+    compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+    compile('org.springframework.boot:dev-tools')
+
     // testing
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }

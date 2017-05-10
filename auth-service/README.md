@@ -2,6 +2,8 @@
 
 - http://www.hascode.com/2016/03/setting-up-an-oauth2-authorization-server-and-resource-provider-with-spring-boot/#Creating_the_Authorization_Server
 - https://bitbucket.org/hascode/spring-oauth2-example
+- https://github.com/making/oauth2-sso-demo
+
 
 login with basic auth -> receive jwt
 

@@ -13,6 +13,8 @@ import java.time.Instant
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import java.security.Principal
+import org.apache.catalina.filters.RequestDumperFilter
+import org.springframework.context.annotation.Profile
 
 
 @SpringBootApplication
@@ -31,6 +33,11 @@ open class DemoAuthorizationApplication
         LOGGER.info("=== init $appName - $ctx =====")
     }
 
+    @Profile("!cloud")
+    @Bean
+    open fun requestDumperFilter(): RequestDumperFilter {
+        return RequestDumperFilter()
+    }
 
 }
 

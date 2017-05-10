@@ -9,9 +9,11 @@ import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.context.ConfigurableApplicationContext
 import org.springframework.context.annotation.Bean
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer
 import java.time.Instant
 
 @SpringBootApplication
+@EnableResourceServer
 open class DemoRestApplication {
     private val LOGGER = AppLogger.get(DemoRestApplication::class.java)
 

@@ -6,6 +6,12 @@ buildscript {
 
 apply plugin: 'org.springframework.boot'
 
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
 dependencies {
     compile project(':common')
 
@@ -20,4 +26,11 @@ dependencies {
 
     // cache: caffeine
     compile("com.github.ben-manes.caffeine:caffeine:$caffeineVersion")
+
+    // spring-cloud & security
+    compile('org.springframework.cloud:spring-cloud-starter-oauth2')
+    compile('org.springframework.boot:spring-boot-starter-security')
+
+    // testing
+    testCompile('org.springframework.boot:spring-boot-starter-test')
 }

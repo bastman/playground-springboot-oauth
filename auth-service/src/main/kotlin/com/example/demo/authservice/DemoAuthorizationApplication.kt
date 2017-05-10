@@ -16,7 +16,6 @@ import java.security.Principal
 
 
 @SpringBootApplication
-@RestController
 @EnableResourceServer
 open class DemoAuthorizationApplication
  //   : WebMvcConfigurerAdapter()

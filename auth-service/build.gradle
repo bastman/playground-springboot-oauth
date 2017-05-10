@@ -29,7 +29,7 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-security')
 
     compile('org.springframework.boot:spring-boot-starter-thymeleaf')
-    compile('org.springframework.boot:dev-tools')
+    compile('org.springframework.boot:spring-boot-devtools')
 
     // testing
     testCompile('org.springframework.boot:spring-boot-starter-test')

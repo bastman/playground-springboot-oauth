@@ -1,5 +1,6 @@
 package com.example.demo.restservice.auth
 
+import com.example.demo.logging.AppLogger
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
@@ -8,20 +9,19 @@ import org.springframework.security.core.AuthenticationException
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher
-import org.springframework.stereotype.Component
-
+import java.io.IOException
 import javax.servlet.FilterChain
 import javax.servlet.ServletException
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
-import java.io.IOException
-import java.util.Collections
 
 
 class JWTLoginFilter(
         url: String,
         authManager: AuthenticationManager
 ) : AbstractAuthenticationProcessingFilter(AntPathRequestMatcher(url)) {
+
+    private val LOGGER = AppLogger.get(this::class.java)
 
     init {
         authenticationManager = authManager
@@ -30,15 +30,21 @@ class JWTLoginFilter(
     @Throws(AuthenticationException::class, IOException::class, ServletException::class)
     override fun attemptAuthentication(
             req: HttpServletRequest, res: HttpServletResponse): Authentication {
-        val creds = ObjectMapper()
-                .readValue(req.inputStream, AccountCredentials::class.java)
-        return authenticationManager.authenticate(
-                UsernamePasswordAuthenticationToken(
-                        creds.username,
-                        creds.password,
-                        emptyList<GrantedAuthority>()
-                )
-        )
+        try {
+            val creds = ObjectMapper()
+                    .readValue(req.inputStream, AccountCredentials::class.java)
+            return authenticationManager.authenticate(
+                    UsernamePasswordAuthenticationToken(
+                            creds.username,
+                            creds.password,
+                            emptyList<GrantedAuthority>()
+                    )
+            )
+        } catch (all: Throwable) {
+            LOGGER.error(all.message, all)
+            throw  all
+        }
+
     }
 
     @Throws(IOException::class, ServletException::class)

@@ -1,7 +1,6 @@
 package com.example.demo.restservice.configuration
 
 import com.example.demo.restservice.auth.JWTAuthenticationFilter
-import com.example.demo.restservice.auth.JWTLoginFilter
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -15,22 +14,28 @@ open class WebSecurityConfig : WebSecurityConfigurerAdapter() {
 
     override fun configure(http: HttpSecurity) {
         //http.authorizeRequests().antMatchers("/**").permitAll();
-        http.authorizeRequests().antMatchers("/*swagger*/**", "/webjars/*swagger*/**", "/v2/api-docs/**").permitAll()
+        http.authorizeRequests()
+                .antMatchers("/*swagger*/**", "/webjars/*swagger*/**", "/v2/api-docs/**")
+                .permitAll()
 
 
 
         http.csrf().disable().authorizeRequests()
-                .antMatchers("/").permitAll()
-                .antMatchers(HttpMethod.POST, "login").permitAll()
-                .anyRequest().authenticated()
+                //.antMatchers("/").permitAll()
+                .antMatchers(HttpMethod.POST, "/auth/login").permitAll()
+                //.anyRequest().authenticated()
                 .and()
                 // We filter the api/login requests
-                .addFilterBefore(JWTLoginFilter("/login", authenticationManager()),
-        UsernamePasswordAuthenticationFilter::class.java)
+                // .addFilterBefore(JWTLoginFilter("/login", authenticationManager()), UsernamePasswordAuthenticationFilter::class.java)
                 // And filter other requests to check the presence of JWT in header
+                //.antMatchers(HttpMethod.POST, "/auth/login").permitAll()
+                //.authorizeRequests()
+                //.anyRequest()
+                //.authenticated().
+                .antMatcher("/api/**")
                 .addFilterBefore(JWTAuthenticationFilter(),
                         UsernamePasswordAuthenticationFilter::class.java
-                );
+                ).authorizeRequests().anyRequest().fullyAuthenticated()
 
     }
 }

@@ -10,6 +10,6 @@ POST /login
 
 {"username":"admin", "password":"password"}
 
+    $ curl -v -k -XPOST -H "Content-Type: application/json" -d '{"username":"admin", "password":"password"}' "http://localhost:8080/auth/login"
 
-
-
+    $ curl -v -H "Authorization: Bearer <BEARER_TOKEN>" http://localhost:8080/api
